@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f7ead147e60445af809bebd412f34044" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="gr691_fnvModel.Administration" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_fnvModel.AgeGroup" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_fnvModel.Attraction" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_fnvModel.Basket" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_fnvModel.Basket_Attraction" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_fnvModel.Developer" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="gr691_fnvModel.FK__Basket_At__Attra__459509CE" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_fnvModel.FK__Basket_At__Baske__44A0E595" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="gr691_fnvModel.Location" Width="1.5" PointX="5.375" PointY="8.875" />
+        <EntityTypeShape EntityType="gr691_fnvModel.Descriptions" Width="1.5" PointX="3.125" PointY="1.25" />
+        <AssociationConnector Association="gr691_fnvModel.FK__Descripti__AgeGr__3B177B5B" />
+        <AssociationConnector Association="gr691_fnvModel.FK__Attractio__Descr__3FDC3078" />
+        <AssociationConnector Association="gr691_fnvModel.FK__Descripti__Devel__3CFFC3CD" />
+        <AssociationConnector Association="gr691_fnvModel.FK__Descripti__Locat__3C0B9F94" />
+        <EntityTypeShape EntityType="gr691_fnvModel.User" Width="1.5" PointX="7.5" PointY="6.125" />
+        <AssociationConnector Association="gr691_fnvModel.FK__User__Basket_ID__48717679" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

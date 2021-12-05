@@ -1,0 +1,556 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище gr691_fnvModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Administration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AgeGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Attraction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description_ID" Type="int" Nullable="false" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="Clossed\Open" Type="nchar" MaxLength="7" />
+        </EntityType>
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="DateOfbuy" Type="date" />
+        </EntityType>
+        <EntityType Name="Basket_Attraction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Basket_ID" Type="int" Nullable="false" />
+          <Property Name="Attraction_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Descriptions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="256" />
+          <Property Name="HoldingCapacity" Type="tinyint" />
+          <Property Name="PermissibleLoad" Type="smallint" />
+          <Property Name="AgeGroup_ID" Type="int" Nullable="false" />
+          <Property Name="WorkingHours_1" Type="time" Precision="7" />
+          <Property Name="WorkingHours_2" Type="time" Precision="7" />
+          <Property Name="Location_ID" Type="int" Nullable="false" />
+          <Property Name="Developer_ID" Type="int" Nullable="false" />
+          <Property Name="DateOfCreation" Type="date" />
+          <Property Name="Support" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Developer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="80" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="80" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="80" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="ShortDescription" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Basket_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Attractio__Descr__3FDC3078">
+          <End Role="Descriptions" Type="Self.Descriptions" Multiplicity="1" />
+          <End Role="Attraction" Type="Self.Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Descriptions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attraction">
+              <PropertyRef Name="Description_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Basket_At__Attra__459509CE">
+          <End Role="Attraction" Type="Self.Attraction" Multiplicity="1" />
+          <End Role="Basket_Attraction" Type="Self.Basket_Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attraction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Basket_Attraction">
+              <PropertyRef Name="Attraction_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Basket_At__Baske__44A0E595">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+          <End Role="Basket_Attraction" Type="Self.Basket_Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Basket_Attraction">
+              <PropertyRef Name="Basket_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Descripti__AgeGr__3B177B5B">
+          <End Role="AgeGroup" Type="Self.AgeGroup" Multiplicity="1" />
+          <End Role="Descriptions" Type="Self.Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgeGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="AgeGroup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Descripti__Devel__3CFFC3CD">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="1" />
+          <End Role="Descriptions" Type="Self.Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="Developer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Descripti__Locat__3C0B9F94">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="Descriptions" Type="Self.Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="Location_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__Basket_ID__48717679">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Basket_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище gr691_fnvModelContainer">
+          <EntitySet Name="Administration" EntityType="Self.Administration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgeGroup" EntityType="Self.AgeGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attraction" EntityType="Self.Attraction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Basket" EntityType="Self.Basket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Basket_Attraction" EntityType="Self.Basket_Attraction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Descriptions" EntityType="Self.Descriptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Developer" EntityType="Self.Developer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Attractio__Descr__3FDC3078" Association="Self.FK__Attractio__Descr__3FDC3078">
+            <End Role="Descriptions" EntitySet="Descriptions" />
+            <End Role="Attraction" EntitySet="Attraction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Basket_At__Attra__459509CE" Association="Self.FK__Basket_At__Attra__459509CE">
+            <End Role="Attraction" EntitySet="Attraction" />
+            <End Role="Basket_Attraction" EntitySet="Basket_Attraction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Basket_At__Baske__44A0E595" Association="Self.FK__Basket_At__Baske__44A0E595">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="Basket_Attraction" EntitySet="Basket_Attraction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Descripti__AgeGr__3B177B5B" Association="Self.FK__Descripti__AgeGr__3B177B5B">
+            <End Role="AgeGroup" EntitySet="AgeGroup" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Descripti__Devel__3CFFC3CD" Association="Self.FK__Descripti__Devel__3CFFC3CD">
+            <End Role="Developer" EntitySet="Developer" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Descripti__Locat__3C0B9F94" Association="Self.FK__Descripti__Locat__3C0B9F94">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__Basket_ID__48717679" Association="Self.FK__User__Basket_ID__48717679">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gr691_fnvModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Administration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AgeGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Descriptions" Relationship="gr691_fnvModel.FK__Descripti__AgeGr__3B177B5B" FromRole="AgeGroup" ToRole="Descriptions" />
+        </EntityType>
+        <EntityType Name="Attraction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description_ID" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Clossed_Open" Type="String" MaxLength="7" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Basket_Attraction" Relationship="Self.FK__Basket_At__Attra__459509CE" FromRole="Attraction" ToRole="Basket_Attraction" />
+          <NavigationProperty Name="Descriptions" Relationship="gr691_fnvModel.FK__Attractio__Descr__3FDC3078" FromRole="Attraction" ToRole="Descriptions" />
+        </EntityType>
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateOfbuy" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Basket_Attraction" Relationship="Self.FK__Basket_At__Baske__44A0E595" FromRole="Basket" ToRole="Basket_Attraction" />
+          <NavigationProperty Name="User" Relationship="gr691_fnvModel.FK__User__Basket_ID__48717679" FromRole="Basket" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Basket_Attraction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Basket_ID" Type="Int32" Nullable="false" />
+          <Property Name="Attraction_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Attraction" Relationship="Self.FK__Basket_At__Attra__459509CE" FromRole="Basket_Attraction" ToRole="Attraction" />
+          <NavigationProperty Name="Basket" Relationship="Self.FK__Basket_At__Baske__44A0E595" FromRole="Basket_Attraction" ToRole="Basket" />
+        </EntityType>
+        <EntityType Name="Developer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="ShortDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Descriptions" Relationship="gr691_fnvModel.FK__Descripti__Devel__3CFFC3CD" FromRole="Developer" ToRole="Descriptions" />
+        </EntityType>
+        <Association Name="FK__Basket_At__Attra__459509CE">
+          <End Role="Attraction" Type="Self.Attraction" Multiplicity="1" />
+          <End Role="Basket_Attraction" Type="Self.Basket_Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attraction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Basket_Attraction">
+              <PropertyRef Name="Attraction_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Basket_At__Baske__44A0E595">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+          <End Role="Basket_Attraction" Type="Self.Basket_Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Basket_Attraction">
+              <PropertyRef Name="Basket_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gr691_fnvEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Administration" EntityType="Self.Administration" />
+          <EntitySet Name="AgeGroup" EntityType="Self.AgeGroup" />
+          <EntitySet Name="Attraction" EntityType="Self.Attraction" />
+          <EntitySet Name="Basket" EntityType="Self.Basket" />
+          <EntitySet Name="Basket_Attraction" EntityType="Self.Basket_Attraction" />
+          <EntitySet Name="Developer" EntityType="Self.Developer" />
+          <AssociationSet Name="FK__Basket_At__Attra__459509CE" Association="Self.FK__Basket_At__Attra__459509CE">
+            <End Role="Attraction" EntitySet="Attraction" />
+            <End Role="Basket_Attraction" EntitySet="Basket_Attraction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Basket_At__Baske__44A0E595" Association="Self.FK__Basket_At__Baske__44A0E595">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="Basket_Attraction" EntitySet="Basket_Attraction" />
+          </AssociationSet>
+          <EntitySet Name="Location" EntityType="gr691_fnvModel.Location" />
+          <EntitySet Name="Descriptions" EntityType="gr691_fnvModel.Descriptions" />
+          <AssociationSet Name="FK__Descripti__AgeGr__3B177B5B" Association="gr691_fnvModel.FK__Descripti__AgeGr__3B177B5B">
+            <End Role="AgeGroup" EntitySet="AgeGroup" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attractio__Descr__3FDC3078" Association="gr691_fnvModel.FK__Attractio__Descr__3FDC3078">
+            <End Role="Descriptions" EntitySet="Descriptions" />
+            <End Role="Attraction" EntitySet="Attraction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Descripti__Devel__3CFFC3CD" Association="gr691_fnvModel.FK__Descripti__Devel__3CFFC3CD">
+            <End Role="Developer" EntitySet="Developer" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Descripti__Locat__3C0B9F94" Association="gr691_fnvModel.FK__Descripti__Locat__3C0B9F94">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+          <EntitySet Name="User" EntityType="gr691_fnvModel.User" />
+          <AssociationSet Name="FK__User__Basket_ID__48717679" Association="gr691_fnvModel.FK__User__Basket_ID__48717679">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Descriptions" Relationship="gr691_fnvModel.FK__Descripti__Locat__3C0B9F94" FromRole="Location" ToRole="Descriptions" />
+        </EntityType>
+        <EntityType Name="Descriptions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="HoldingCapacity" Type="Byte" />
+          <Property Name="PermissibleLoad" Type="Int16" />
+          <Property Name="AgeGroup_ID" Type="Int32" Nullable="false" />
+          <Property Name="WorkingHours_1" Type="Time" Precision="7" />
+          <Property Name="WorkingHours_2" Type="Time" Precision="7" />
+          <Property Name="Location_ID" Type="Int32" Nullable="false" />
+          <Property Name="Developer_ID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfCreation" Type="DateTime" Precision="0" />
+          <Property Name="Support" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AgeGroup" Relationship="gr691_fnvModel.FK__Descripti__AgeGr__3B177B5B" FromRole="Descriptions" ToRole="AgeGroup" />
+          <NavigationProperty Name="Attraction" Relationship="gr691_fnvModel.FK__Attractio__Descr__3FDC3078" FromRole="Descriptions" ToRole="Attraction" />
+          <NavigationProperty Name="Developer" Relationship="gr691_fnvModel.FK__Descripti__Devel__3CFFC3CD" FromRole="Descriptions" ToRole="Developer" />
+          <NavigationProperty Name="Location" Relationship="gr691_fnvModel.FK__Descripti__Locat__3C0B9F94" FromRole="Descriptions" ToRole="Location" />
+        </EntityType>
+        <Association Name="FK__Descripti__AgeGr__3B177B5B">
+          <End Type="gr691_fnvModel.AgeGroup" Role="AgeGroup" Multiplicity="1" />
+          <End Type="gr691_fnvModel.Descriptions" Role="Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgeGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="AgeGroup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attractio__Descr__3FDC3078">
+          <End Type="gr691_fnvModel.Descriptions" Role="Descriptions" Multiplicity="1" />
+          <End Type="gr691_fnvModel.Attraction" Role="Attraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Descriptions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attraction">
+              <PropertyRef Name="Description_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Descripti__Devel__3CFFC3CD">
+          <End Type="gr691_fnvModel.Developer" Role="Developer" Multiplicity="1" />
+          <End Type="gr691_fnvModel.Descriptions" Role="Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="Developer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Descripti__Locat__3C0B9F94">
+          <End Type="gr691_fnvModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="gr691_fnvModel.Descriptions" Role="Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="Location_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Basket_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Basket" Relationship="gr691_fnvModel.FK__User__Basket_ID__48717679" FromRole="User" ToRole="Basket" />
+        </EntityType>
+        <Association Name="FK__User__Basket_ID__48717679">
+          <End Type="gr691_fnvModel.Basket" Role="Basket" Multiplicity="1" />
+          <End Type="gr691_fnvModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Basket_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище gr691_fnvModelContainer" CdmEntityContainer="gr691_fnvEntities">
+          <EntitySetMapping Name="Administration">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Administration">
+              <MappingFragment StoreEntitySet="Administration">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgeGroup">
+            <EntityTypeMapping TypeName="gr691_fnvModel.AgeGroup">
+              <MappingFragment StoreEntitySet="AgeGroup">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attraction">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Attraction">
+              <MappingFragment StoreEntitySet="Attraction">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description_ID" ColumnName="Description_ID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Clossed_Open" ColumnName="Clossed\Open" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Basket">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Basket">
+              <MappingFragment StoreEntitySet="Basket">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DateOfbuy" ColumnName="DateOfbuy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Basket_Attraction">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Basket_Attraction">
+              <MappingFragment StoreEntitySet="Basket_Attraction">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Basket_ID" ColumnName="Basket_ID" />
+                <ScalarProperty Name="Attraction_ID" ColumnName="Attraction_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Developer">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Developer">
+              <MappingFragment StoreEntitySet="Developer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Descriptions">
+            <EntityTypeMapping TypeName="gr691_fnvModel.Descriptions">
+              <MappingFragment StoreEntitySet="Descriptions">
+                <ScalarProperty Name="Support" ColumnName="Support" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="Developer_ID" ColumnName="Developer_ID" />
+                <ScalarProperty Name="Location_ID" ColumnName="Location_ID" />
+                <ScalarProperty Name="WorkingHours_2" ColumnName="WorkingHours_2" />
+                <ScalarProperty Name="WorkingHours_1" ColumnName="WorkingHours_1" />
+                <ScalarProperty Name="AgeGroup_ID" ColumnName="AgeGroup_ID" />
+                <ScalarProperty Name="PermissibleLoad" ColumnName="PermissibleLoad" />
+                <ScalarProperty Name="HoldingCapacity" ColumnName="HoldingCapacity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="gr691_fnvModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Basket_ID" ColumnName="Basket_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
